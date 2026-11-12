@@ -10,47 +10,6 @@ The app works without credentials in **DEMO · MOCK** mode. Gemini 3.1 Flash-Lit
 
 Personal reimbursements and gifts stay informational. An ambiguous request asks for purpose. A commercial purchase receives guidance toward the official checkout flow. Only a complete business invoice request can reach the mock draft review.
 
-## Requirements
-
-- Node.js `24.22.1` or later in the Node 24 line (`node:sqlite` is used; SQLite is Release Candidate in Node 24).
-- npm.
-
-## Run locally
-
-```powershell
-npm install
-npm run dev
-```
-
-Open `http://localhost:3000`. The app creates a local SQLite file at `data/payintent.db`. To change the location, set `DATABASE_PATH` before starting the process. The `.env.example` contains only non-secret defaults.
-
-## Connect PayPal Sandbox and AI
-
-Edit the ignored `.env.local` in the project root:
-
-```dotenv
-PAYINTENT_MODE=sandbox
-PAYPAL_ENVIRONMENT=sandbox
-PAYPAL_CLIENT_ID=your_sandbox_client_id
-PAYPAL_CLIENT_SECRET=your_sandbox_client_secret
-PAYPAL_SANDBOX_BUSINESS_EMAIL=your_sandbox_business_email
-GEMINI_API_KEY=your_google_ai_studio_api_key
-```
-
-Use a PayPal Sandbox **business** account, associate the REST app with that account, and request the Invoicing API permission on the app details page. Set `PAYPAL_SANDBOX_BUSINESS_EMAIL` to that account's exact email from **Testing Tools → Sandbox Accounts → ⋮ → View/Edit Account**. Confirm the OAuth token includes an Invoicing scope before testing invoice creation. Replace `GEMINI_API_KEY` with `TYPESAFE_API_KEY` if you want Jev instead. If both keys are set, Jev takes precedence. Restart `npm run dev` after editing `.env.local`. Do not commit or paste keys into chat.
-
-The invoice action creates a **draft only**. It does not email the recipient or capture funds. A sandbox buyer email and synthetic invoice details are suitable for testing. The UI states which payment provider and AI mode are active.
-
-Next.js is configured to use Webpack because the current Windows environment cannot load the installed SWC native binding; Webpack builds successfully with the available WASM fallback.
-
-## Test and verify
-
-```powershell
-npm test
-npm run typecheck
-npm run lint
-npm run build
-```
 
 ## Safety and privacy limits
 
